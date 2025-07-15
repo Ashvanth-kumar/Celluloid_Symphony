@@ -20,7 +20,7 @@ function Header() {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/multi?api_key=db8d53ea7f93c34789d584745abbbd08&query=${newQuery}`
+        `https://api.themoviedb.org/3/search/multi?api_key=1910bf3997438b7c5ed27530f88a28d4&query=${newQuery}`
       );
       const data = await response.json();
       setSearchResults(data.results || []);
@@ -36,7 +36,7 @@ function Header() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/multi?api_key=db8d53ea7f93c34789d584745abbbd08&query=${query}`
+        `https://api.themoviedb.org/3/search/multi?api_key=1910bf3997438b7c5ed27530f88a28d4&query=${query}`
       );
       const data = await response.json();
       setIsLoading(false);

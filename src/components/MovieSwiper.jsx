@@ -52,7 +52,7 @@ function MovieSwiper({ data, title, isMovie = true, upcoming = false }) {
     fetchInitialData();
   }, [isMovie]);
   const fetchFilteredMovies = async (year, isMovie) => {
-    const apiKey = "db8d53ea7f93c34789d584745abbbd08";
+    const apiKey = "1910bf3997438b7c5ed27530f88a28d4";
     const type = isMovie ? "movie" : "tv";
 
     const url = year

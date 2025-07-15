@@ -17,7 +17,7 @@ const MovieList = () => {
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
     fetchData(
-      "https://api.themoviedb.org/3/discover/movie?api_key=db8d53ea7f93c34789d584745abbbd08",
+      "https://api.themoviedb.org/3/discover/movie?api_key=1910bf3997438b7c5ed27530f88a28d4",
       setMovieList
     );
   }, []);
@@ -28,7 +28,7 @@ const SeriesList = () => {
   const [seriesList, setSeriesList] = useState([]);
   useEffect(() => {
     fetchData(
-      "https://api.themoviedb.org/3/discover/tv?api_key=db8d53ea7f93c34789d584745abbbd08",
+      "https://api.themoviedb.org/3/discover/tv?api_key=1910bf3997438b7c5ed27530f88a28d4",
       setSeriesList
     );
   }, []);
@@ -39,7 +39,7 @@ const TrendMovies = () => {
   const [trendMovieList, setTrendMovieList] = useState([]);
   useEffect(() => {
     fetchData(
-      "https://api.themoviedb.org/3/trending/movie/week?api_key=db8d53ea7f93c34789d584745abbbd08&language=en-US",
+      "https://api.themoviedb.org/3/trending/movie/week?api_key=1910bf3997438b7c5ed27530f88a28d4&language=en-US",
       setTrendMovieList
     );
   }, []);

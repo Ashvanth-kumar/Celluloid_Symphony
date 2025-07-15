@@ -1,6 +1,6 @@
 const BASE_URL = "https://api.themoviedb.org/3";
 const AUTH_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkYjhkNTNlYTdmOTNjMzQ3ODlkNTg0NzQ1YWJiYmQwOCIsIm5iZiI6MTczNzgxNjY0Mi44ODQsInN1YiI6IjY3OTRmYTQyMDljMjUyZTNhYjIzNzY4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ySw6r3Llu06lHY-0T75EVLrn71bT41ofcZsDLUg_oPo";
+  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxOTEwYmYzOTk3NDM4YjdjNWVkMjc1MzBmODhhMjhkNCIsIm5iZiI6MTc1MjU4MjE0Ni44MDMsInN1YiI6IjY4NzY0ODAyYWFmNTU3MGQ0MWEyNDM3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OSQRmi97Imj2OJecjMXE_mnFjiH1xYAIHxLT4c7rLFU";
 
 const fetchData = async (url) => {
   try {

@@ -19,7 +19,7 @@ function ActorsDetails() {
   const [showMoreTv, setShowMoreTv] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const memberDetails = location.state?.memberDetails;
-  const apiKey = "db8d53ea7f93c34789d584745abbbd08";
+  const apiKey = "1910bf3997438b7c5ed27530f88a28d4";
   const navigate = useNavigate();
 
   useEffect(() => {

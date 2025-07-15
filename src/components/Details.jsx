@@ -62,7 +62,7 @@ function Details() {
   const handleMemberClick = async (memberId) => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/person/${memberId}?api_key=db8d53ea7f93c34789d584745abbbd08&language=en-US`
+        `https://api.themoviedb.org/3/person/${memberId}?api_key=1910bf3997438b7c5ed27530f88a28d4&language=en-US`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch member details");
