@@ -52,12 +52,8 @@ function MovieSwiper({ data, title, isMovie = true, upcoming = false }) {
     fetchInitialData();
   }, [isMovie]);
   const fetchFilteredMovies = async (year, isMovie) => {
-    const apiKey = "1910bf3997438b7c5ed27530f88a28d4";
     const type = isMovie ? "movie" : "tv";
-
-    const url = year
-      ? `https://api.themoviedb.org/3/discover/${type}?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&primary_release_year=${year}`
-      : `https://api.themoviedb.org/3/discover/${type}?api_key=${apiKey}&language=en-US&sort_by=popularity.desc`;
+    const url = `/api/discover?type=${type}${year ? `&year=${year}` : ""}`;
 
     try {
       const response = await fetch(url);
@@ -68,6 +64,7 @@ function MovieSwiper({ data, title, isMovie = true, upcoming = false }) {
       return [];
     }
   };
+
   const clicked = async (item) => {
     const BASE_URL = "https://api.themoviedb.org/3";
 

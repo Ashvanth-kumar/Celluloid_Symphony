@@ -19,7 +19,6 @@ function ActorsDetails() {
   const [showMoreTv, setShowMoreTv] = useState(false);
   const [refresh, setRefresh] = useState(true);
   const memberDetails = location.state?.memberDetails;
-  const apiKey = "1910bf3997438b7c5ed27530f88a28d4";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,16 +28,30 @@ function ActorsDetails() {
     return () => clearTimeout(timer);
   }, []);
 
+  
   useEffect(() => {
-    if (!memberDetails) return;
+    if (!memberDetails?.id) return;
 
-    fetchCredits(
-      memberDetails,
-      apiKey,
-      setMovieCredits,
-      setTvCredits,
-      setIsLoading
-    );
+    const fetchCredits = async () => {
+      try {
+        const [movieRes, tvRes] = await Promise.all([
+          fetch(`/api/movie-credits?id=${memberDetails.id}`),
+          fetch(`/api/tv-credits?id=${memberDetails.id}`),
+        ]);
+
+        const movieData = await movieRes.json();
+        const tvData = await tvRes.json();
+
+        setMovieCredits(movieData.cast || []);
+        setTvCredits(tvData.cast || []);
+      } catch (error) {
+        console.error("Error fetching credits:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCredits();
   }, [memberDetails]);
 
   const clicked = async (item) => {

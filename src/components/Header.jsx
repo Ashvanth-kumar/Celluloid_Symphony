@@ -19,9 +19,7 @@ function Header() {
     }
 
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/multi?api_key=1910bf3997438b7c5ed27530f88a28d4&query=${newQuery}`
-      );
+      const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
       const data = await response.json();
       setSearchResults(data.results || []);
     } catch (error) {
@@ -30,14 +28,12 @@ function Header() {
   };
 
   const handleSubmit = async (event) => {
-    if (event.preventDefault) event.preventDefault(); // Prevent form submission if triggered by the form
+    if (event.preventDefault) event.preventDefault();
     if (query.trim() === "") return;
 
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/multi?api_key=1910bf3997438b7c5ed27530f88a28d4&query=${query}`
-      );
+      const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
       const data = await response.json();
       setIsLoading(false);
       navigate("/search", { state: { searchResults: data.results } });

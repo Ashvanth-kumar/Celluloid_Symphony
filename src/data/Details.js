@@ -1,49 +1,36 @@
-const BASE_URL = "https://api.themoviedb.org/3";
-const AUTH_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxOTEwYmYzOTk3NDM4YjdjNWVkMjc1MzBmODhhMjhkNCIsIm5iZiI6MTc1MjU4MjE0Ni44MDMsInN1YiI6IjY4NzY0ODAyYWFmNTU3MGQ0MWEyNDM3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OSQRmi97Imj2OJecjMXE_mnFjiH1xYAIHxLT4c7rLFU";
-
 const fetchData = async (url) => {
   try {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${AUTH_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data: ${response.status}`);
-    }
-    const data = await response.json();
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+    const data = await res.json();
     return data.results || data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  } catch (err) {
+    console.error("Error:", err);
     return [];
   }
 };
 
-export const fetchReviews = (id, type) => {
-  return fetchData(`${BASE_URL}/${type}/${id}/reviews?language=en-US&page=1`);
-};
+export const fetchReviews = (id, media = "movie") =>
+  fetchData(`/api/tmdb?type=reviews&id=${id}&media=${media}`);
 
-export const fetchVideos = (id, type) => {
-  return fetchData(`${BASE_URL}/${type}/${id}/videos?language=en-US`);
-};
+export const fetchVideos = (id, media = "movie") =>
+  fetchData(`/api/tmdb?type=videos&id=${id}&media=${media}`);
 
-export const fetchTVCredits = (id) => {
-  return fetchData(`${BASE_URL}/tv/${id}/credits?language=en-US`);
-};
+export const fetchImages = (id, media = "movie") =>
+  fetchData(`/api/tmdb?type=images&id=${id}&media=${media}`);
 
-export const fetchMovieCredits = (id) => {
-  return fetchData(`${BASE_URL}/movie/${id}/credits?language=en-US`);
-};
+export const fetchMovieCredits = (id) =>
+  fetchData(`/api/tmdb?type=movie_credits&id=${id}`);
 
-export const fetchImages = (id, type) => {
-  return fetchData(`${BASE_URL}/${type}/${id}/images`);
-};
+export const fetchTVCredits = (id) =>
+  fetchData(`/api/tmdb?type=tv_credits&id=${id}`);
 
+export const fetchPersonDetails = (id) =>
+  fetchData(`/api/tmdb?type=person&id=${id}`);
+
+// Combined credit fetch for actor profile
 export const fetchCredits = async (
   memberDetails,
-  apiKey,
   setMovieCredits,
   setTvCredits,
   setIsLoading
@@ -51,17 +38,13 @@ export const fetchCredits = async (
   try {
     setIsLoading(true);
 
-    const movieResponse = await fetch(
-      `${BASE_URL}/person/${memberDetails.id}/movie_credits?api_key=${apiKey}&language=en-US`
-    );
-    const movieData = await movieResponse.json();
-    setMovieCredits(movieData.cast || []);
+    const [movieRes, tvRes] = await Promise.all([
+      fetchData(`/api/tmdb?type=movie_credits&id=${memberDetails.id}`),
+      fetchData(`/api/tmdb?type=tv_credits&id=${memberDetails.id}`),
+    ]);
 
-    const tvResponse = await fetch(
-      `${BASE_URL}/person/${memberDetails.id}/tv_credits?api_key=${apiKey}&language=en-US`
-    );
-    const tvData = await tvResponse.json();
-    setTvCredits(tvData.cast || []);
+    setMovieCredits(movieRes.cast || []);
+    setTvCredits(tvRes.cast || []);
   } catch (error) {
     console.error("Error fetching credits:", error);
   } finally {

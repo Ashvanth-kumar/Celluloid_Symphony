@@ -1,49 +1,35 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const fetchData = async (url, setData) => {
+const fetchData = async (url, setter) => {
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    const data = await response.json();
-    setData(data.results);
+    const res = await fetch(url);
+    const data = await res.json();
+    setter(data.results || []);
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching data from:", url, error);
   }
 };
 
-const MovieList = () => {
+export const MovieList = () => {
   const [movieList, setMovieList] = useState([]);
   useEffect(() => {
-    fetchData(
-      "https://api.themoviedb.org/3/discover/movie?api_key=1910bf3997438b7c5ed27530f88a28d4",
-      setMovieList
-    );
+    fetchData("/api/discover-movies", setMovieList);
   }, []);
   return movieList;
 };
 
-const SeriesList = () => {
+export const SeriesList = () => {
   const [seriesList, setSeriesList] = useState([]);
   useEffect(() => {
-    fetchData(
-      "https://api.themoviedb.org/3/discover/tv?api_key=1910bf3997438b7c5ed27530f88a28d4",
-      setSeriesList
-    );
+    fetchData("/api/discover-series", setSeriesList);
   }, []);
   return seriesList;
 };
 
-const TrendMovies = () => {
+export const TrendMovies = () => {
   const [trendMovieList, setTrendMovieList] = useState([]);
   useEffect(() => {
-    fetchData(
-      "https://api.themoviedb.org/3/trending/movie/week?api_key=1910bf3997438b7c5ed27530f88a28d4&language=en-US",
-      setTrendMovieList
-    );
+    fetchData("/api/trending-movies", setTrendMovieList);
   }, []);
   return trendMovieList;
 };
-
-export { MovieList, SeriesList, TrendMovies };
